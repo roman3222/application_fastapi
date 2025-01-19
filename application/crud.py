@@ -1,4 +1,4 @@
-import models, schemas
+from application import models, schemas
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from typing import Sequence
@@ -14,7 +14,6 @@ async def create_application(db: AsyncSession, application: schemas.ApplicationC
     db.add(db_application)
     await db.commit()
     await db.refresh(db_application)
-    print(type(db_application))
     return db_application
 
 

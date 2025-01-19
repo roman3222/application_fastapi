@@ -1,7 +1,7 @@
 import asyncio
 from aiokafka import AIOKafkaConsumer
-from log import info_logger
-from config import settings
+from application.log import info_logger
+from application.config import settings
 
 async def consume_messages():
     consumer = AIOKafkaConsumer(

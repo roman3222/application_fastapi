@@ -5,7 +5,7 @@ logging.basicConfig(level=logging.DEBUG)
 info_logger = logging.getLogger("info_logger")
 info_logger.setLevel(logging.INFO)
 
-info_handler = logging.FileHandler("app_info.log")
+info_handler = logging.FileHandler("../app_info.log")
 info_handler.setLevel(logging.INFO)
 
 info_formatter = logging.Formatter(
@@ -25,7 +25,7 @@ logging.basicConfig(
 error_logger = logging.getLogger("error_logger")
 error_logger.setLevel(logging.ERROR)
 
-error_handler = logging.FileHandler("app_errors.log")
+error_handler = logging.FileHandler("../app_errors.log")
 error_handler.setLevel(logging.ERROR)
 
 error_formatter = logging.Formatter(

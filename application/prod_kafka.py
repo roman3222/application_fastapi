@@ -1,8 +1,8 @@
 import json
-from schemas import Application
+from application.schemas import Application
 from aiokafka import AIOKafkaProducer
-from config import settings
-from log import info_logger, error_logger
+from application.config import settings
+from application.log import info_logger, error_logger
 from datetime import datetime
 
 

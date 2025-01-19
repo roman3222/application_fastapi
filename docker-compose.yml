@@ -14,7 +14,7 @@ services:
       - DATABASE_URL=postgresql+asyncpg://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}
       - KAFKA_BOOTSTRAP_SERVERS=${KAFKA_BOOTSTRAP_SERVERS}
     networks:
-      - app-network
+      - application-network
 
   db:
     image: postgres:13
@@ -30,7 +30,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - app-network
+      - application-network
 
   kafka:
     image: bitnami/kafka:latest
@@ -42,7 +42,7 @@ services:
     depends_on:
       - zookeeper
     networks:
-      - app-network
+      - application-network
 
   zookeeper:
     image: bitnami/zookeeper:latest
@@ -51,8 +51,19 @@ services:
     ports:
       - "2181:2181"
     networks:
-      - app-network
+      - application-network
+
+  tests:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://${DB_USER}:${DB_PASSWORD}@db:${DB_PORT}/${DB_NAME}
+    command: pytest
+    networks:
+      - application-network
 
 networks:
-  app-network:
+  application-network:
     driver: bridge

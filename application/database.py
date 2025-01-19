@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import declarative_base
-from config import settings
+from application.config import settings
 
 SQLALCHEMY_DATABASE_URL = settings.get_db_url()
 
@@ -18,10 +18,9 @@ AsyncSessionLocal = async_sessionmaker(
 Base = declarative_base()
 
 
-async def get_db() -> AsyncSessionLocal:
-    """
-    Генератор сессий базы данных.
-    :return: AsyncSession: Асинхронная сессия базы данных.
-    """
+async def get_db() -> AsyncSession:
     async with AsyncSessionLocal() as db:
-        yield db
+        try:
+            yield db
+        finally:
+            await db.close()  # Закрываем сессию
